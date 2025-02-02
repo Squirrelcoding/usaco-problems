@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+  freopen("cowsignal.in", "r", stdin); 
+  freopen("cowsignal.out", "w", stdout); 
+
+  int m; int n; int k;
+
+  cin >> m >> n >> k;
+
+  string line;
+  while (getline(cin, line)) {
+    if (line.size() == 0) {
+      continue;
+    }
+  
+    /// For each #, we should print out the result K times to the right and K times down.
+
+    for (int j = 0; j < k; ++j) {
+      for (char c: line) {
+        if (c == 'X') {
+          for (int i = 0; i < k; ++i) {
+            cout << 'X';
+          }
+        }
+
+        if (c == '.') {
+          for (int i = 0; i < k; ++i) {
+            cout << '.';
+          }
+        }
+
+      }
+      cout << endl; 
+    }
+  }
+
+  return 0;
+}
