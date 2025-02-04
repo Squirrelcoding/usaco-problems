@@ -1,0 +1,132 @@
+Main idea
+
+ASK: How do students reach out to professors to get involved?
+
+- Some professors have "hoops" / classes that they want students to take before research
+
+bayesian optimization, AI for sequential decision making with applications to scientific discovery
+
+ALL ABOUT SCIENTIFIC discovery.
+
+How can new discoveries in science help solve climate change???
+
+MOFs are a new class of materials. they can capture a lot of gasses and are very useful like CO2 from
+power plants. You dont need a lot of it to store it underground. Super cool.
+
+PROBLEM: there are a lot of possible nanoprous materials. How do we choose the best given only the results of a few experiments?
+Choices of nodes, linkers, topology, etc.
+If we have 200 possible nodes, 10 possible linkers, 100 topologies, we can have a LOT of different possbilities
+
+PROBLEM: How do we evaluate how effective a certain configuration is? Costly to make experiments.
+
+Otpimization problems in a very large space is hard.
+
+OTHER PROBLEM: Sustainable concfrete design is also hard to determine. Concrete contributes a lot to climate change. The compositions of the materials in the concrete really determines the final product. Takes experiments to determine how sustainable and strong it is.
+
+OTHER OTHER PROBLEM: Drug developments is also super duper expensive and a lot of different configurations and molecules and stuff. Very expensive to evaluate. The number of drugs we've produced is reducing.
+
+
+AutoML - very expensive to train neural networks. Optimize hyperparameters.
+
+Cookies - How do we make the best cookies????
+
+
+PAPER NAME: Bayesian Optimization for a Better Dessert at Google
+
+The general problem is experimental design. In general, we have a scientist and a design space (the space with all of the possible choices). The problem is evaluating each configuration and optimizing. Very expensive to run experiments.
+
+How do we design an algorithm that designs the BEST experiments?
+
+More common attributes:
+I. Large search space
+II. Objective function is a black box (It's hard to generalize the results of the experiment to determine the measurements of other configurations. The only way to measure something is by conducting a whole ass experiment, and so we don't have any nice function like we do in calculus.)
+III. Objective function is expensive.
+IV: Optimization: We want to optimize it.
+
+
+ADVICE: He says its good to study something else (in this case he studied the material sciences) so that you know what your work is being applied to. That's why he knows a lot about the material science stuff. 
+
+ONE VERY GENERAL FRAMEWORK (Bayesian optimization, 1 dimension):
+
+- So we have a little curve (that we don't know about but the points are on it) and a few observation points. The question is..... how do we choose more observation points? This is where ML comes in. We want to figure out a good model for the objective function. 
+
+We also want the model to represent the uncertainty.
+
+A GAUSSIAN PROCESS MODEL does exactly that. It provides a mean prediction but also an error bound.
+
+A key principle: the closer we get to a data point, the less the error bound. The further away it is, the higher the error bound. That makes a lot of sense!!!
+
+A Surrogate Model is a model of a blackbox objective.
+
+Bayesian models allow you to encode some sort of domain knowledge via priors.
+
+- They make assumptions like a function being linear or periodic. These assumptions can be baked into GP models.
+
+GP models are defined by a kernel. A kernel says "given two points, how similar are they?" For example, a traditional one just defines the literal distance (Eucledian distance). Other kernels are like for periodic functions and are called like periodic kernels.
+
+Given a model, how do we pick the next candidate?  We do that with an acquisition function.
+
+An acquisition model basically goes through 100 candidates and evaluates how good it is. ITt picks the one with the highest utility. That is ONE loop of Bayesian optimization. 
+
+How do we design an acquisition function?
+
+
+- Surrogate model gives mean and radius
+- AF is like AF(x) = mu(x) + beta * sigma(x)
+- It exploits the knowledge we have. There is a trade off between exploration and Exploitation
+
+For example, you're at the state fair, have limited money and food. 
+Exploitation uses previous knowledge. Exploration... explores.
+
+The AF function BALANCES the exploration and exploitation functions.
+
+KEY IDEA: Build a surrogate model and use it to intelligently search the space.
+
+Steps!!!!
+
+- Fita  GP model
+- Optimize A functions
+- next black box
+
+
+- We will slowly converge to the next point 
+
+
+The key idea: We exploit domain knowledge and choose this acquisition function to keep choosing the next point from a list of candidates (we evaluate each candidate using another function). Eventually they converge. So, we use the minimum number of experiments.
+
+QUESTION: is it always guaranteed to converge? How do we know if it converges?
+
+How do we know if the sequence of points being chosen converges?
+
+ANSWER: We just keep restricting the domain so it has to converge to something.
+
+===================
+
+AI for sequential decision making
+
+Context: An agent exists in some environment and acts in the environment to maximize the reward of their actions.
+
+
+Single step decision making.      Multi step decision making
+- Black box optimization             markov decision processes
+- Molecules, autoML, ...            board games, code/math/robotics
+- Bayesian optimization             reincorcement learning.
+
+
+These problems are central to AI itself.
+
+Sequential decision making is CRITICAL to large language models
+
+
+- Having right evaluation techniques and stuff and becncharmks f=0reijbrno
+- The long-term parts of research.
+- Research is unpredictable - you're not guaranteed to solve the problem. It's a real sense of discovery!
+
+- You mentioned that a background in calculus, linear algebra, and probability and some python libraries is enough, but I noticed that there is a lot more "specialized knowledge" in the research itself like Acquisition functions and Bayesian optimization that aren't covered in these introductroy courses. How long would it take to go from basic knowledge to getting ready to actually get your hands dirty with the researc?
+x
+
+HIS LAB
+
+- UROP's are open to all.
+
+REACH OUT TO HIM WITH YOUR CV/RESUME AND READ SOME PAPERS with CSCI3901 in title
