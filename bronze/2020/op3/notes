@@ -1,3 +1,18 @@
 - If two cows interact and neither gets infected, then either:
-  - At least one is infected and K hoove-shakes have already passed.
+  - At least one is infected and K hoove-shakes have already passed. I think taht in this case, we can update the bounds for K.
   - None are infected.
+
+THE META: The main stratgey that we'll be using linked lists to form a timeline of interactions of each cow.
+
+We already do have a timeline, but we want to be able to track the actions of each individual cow separately.
+
+===== Finding patient 0 =====
+
+- We keep track of each cow's interactions. How do we know if a cow is certainly not patient 0?
+- Well, we would know if their first interaction does not cause the other cow to be infected. In this case, we can either see that either K=0 or... the cow just isn't infected.
+
+
+===== Finding K ===== 
+
+- How do we update the lower and upper bounds of K?
+- We should
