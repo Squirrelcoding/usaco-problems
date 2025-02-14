@@ -21,9 +21,8 @@ struct animal_hash {
 
 int main() {
   freopen("guess.in", "r", stdin);
-  freopen("guess.out", "w", stdout);
-
-  int n;
+  /*freopen("guess.out", "w", stdout);*/ 
+  int n; 
   cin >> n;
 
   unordered_set<animal, animal_hash> animals;
@@ -76,8 +75,7 @@ int main() {
         max_amount = keypair.second.size();
       }
     }
-    /*cout << "The most common characteristic is " << most_common_characteristic << endl;*/
-
+    cout << "The most common characteristic is " << most_common_characteristic << endl;
 
     vector<animal> to_be_deleted;
 
@@ -98,8 +96,6 @@ int main() {
         // Remove the animal from the main set.
         to_be_deleted.push_back(animal);
       } 
-        
-      
     }
 
     for (auto animal : to_be_deleted) {
