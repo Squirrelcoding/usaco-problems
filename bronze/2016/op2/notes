@@ -1,0 +1,23 @@
+== Step 1 ==
+
+Create some sort of struct or data structure that can hold all of the pound symbols and has an easy
+way to manipulate them so that they can be moved easily and checked if there are overlaps or anything like that
+
+For each of these data structures we also want ALL of the possible ways that they can be shifted so that makes stuff
+so much easier to check. 
+
+Also implement a method that checks if two are equal for the final result.
+
+We want to easily combine stuff...
+
+== Step 2 ==
+
+Loop through each of the input and put them into these data structures.
+
+== Step 3 ==
+
+Make a double loop that checks every possible combination of shapes
+
+== Step 4 ==
+
+Find the ones that match.
