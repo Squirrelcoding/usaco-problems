@@ -1,0 +1,16 @@
+- probably better ways to do it then to brute force every single possible combination
+
+- Clearly, some combinations are simply not good, such as all of the integers with an empty list
+
+- Split a set of integers S into two subsets such that their difference is a minimum
+
+
+- Clearly, the maximum has to be in one of the two sets.
+
+- Start by putting the maximum in one of the two sets and start by adding the next few ones in the next set
+until we exceed the other one.
+
+- Step 1: sort it
+- Step 2: Z
+
+1 2 3 4 5 6 7

@@ -1,0 +1,17 @@
+- One way to do this is to consider all possible combination of cows, count the number of
+liars in each scenario, and return that. But this has O(2^n) time complexity...
+
+- We should consider all "greater than" statements and "less than" statements.
+- If two of these are incompatible, then we know that at least one cow is lying.
+- Actually, we should count the number of unique rows for which there is an X and do the same 
+for columns, and take the minimum of the two.
+
+- Notice that all less/greater than statements are compatible.Type
+
+- Find the minimum number of cows needed to be removed to make everything true
+
+
+- For every pair of potentially lying cows, we know that one of them is lying duhhhh
+
+- But how do we choose which one is actually lying? The task is to find the minimum amount, so
+it makes perfect sense that we should choose the one that caused the MOST number of contradictions!
