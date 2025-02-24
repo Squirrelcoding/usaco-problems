@@ -1,20 +1,28 @@
-#include <iostream>
-#include <map>
-#include <string>
-#include <vector>
-#include <sstream>
-#include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-struct pair_hash {
-    template <class T1, class T2>
-    std::size_t operator() (const std::pair<T1, T2>& p) const {
-        auto hash1 = std::hash<T1>{}(p.first);
-        auto hash2 = std::hash<T2>{}(p.second);
-        return hash1 ^ (hash2 << 1); // or use boost::hash_combine
+
+bool is_valid(vector<pair<int, int>>& constraints, vector<int> cows) {
+
+  // Loop through each constraint and check if it's satisfied
+  for (auto constraint : constraints) {
+    int a; int b;
+    for (int i = 0; i < cows.size(); ++i) {
+      if (cows[i] == constraint.first) {
+        a = i;
+      }
+      if (cows[i] == constraint.second) {
+        b = i;
+      }
+      if (abs(a-b) != 1) {
+        return false;
+      }
     }
-};
+  }
+  
+  return true;
+}
 
 int main() {
   freopen("lineup.in", "r", stdin);
@@ -54,32 +62,21 @@ int main() {
     constraints.push_back(make_pair(min(first_cow, second_cow), max(first_cow, second_cow)));
   }
 
+  vector<int> v;
+  for (int i = 0; i < n; ++i) v.push_back(i);
 
-  vector<vector<int>> orders;
-  orders.push_back({constraints[0].first});
-
-  auto next_pair = constraints[0];
-  while (constraints.size() > 0) {
-    vector<int> next_order;
-    next_order.push_back(constraints[0].first);
-    vector<pair<int, int>> deleted;
-    // Try to find other pairs with next_pair.second as the first entry.
-    for (auto constraint : constraints) {
-      if (constraint == next_pair) continue;
-      if (next_pair.second == constraint.first) {
-        next_order.push_back(constraint.first);
-        deleted.push_back(constraint);
-      }
-    }
-    orders.push_back(next_order);
-
-    // Delete all of these guys
-    for (auto x : deleted) {
-      constraints.erase(remove(constraints.begin(), constraints.end(), x), constraints.end());
+  vector<vector<int>> valid_solutions;
+  // Loop through all of the combinations
+  do {
+    if (is_valid(constraints, v)) {
+      valid_solutions.push_back(v);
     }
 
-  }
+  } while (next_permutation(v.begin(), v.end()));
 
+
+  // Order the valid solutions and get the "smallest" one;
+ 
   return 0;
 }
 
