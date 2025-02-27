@@ -8,7 +8,6 @@ class Node:
     def set_right(self, x):
         self.right = x
 
-
 def generate_trees(nums):
     res = []
     if len(nums) == 1:
