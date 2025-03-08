@@ -1,0 +1,39 @@
+func calculateright(start):
+  int total = 0;
+  int current_most_right = start;
+  int radius = 1;
+
+  total += find all of the bales within a distance of radius of current_most_right
+
+  - we already countefd all of the bales to the left of the current rightmost bale so 
+  - it suffices to count all of the haybales that are only to the right of the rightmost
+  - haybale. how can we do this in O(1) time?
+  - we should probably use a hashmap
+
+  How do we find the rightmost bale?
+
+  current_most_right = most_right_bale
+
+  radius += 1
+
+          X
+    X X X X   X            X
+1 2 3 4 5 6 7 8 9 10 11 12 13
+
+
+How do we actually count the number of bales to the right of the
+rightmost haybale
+
+We should form a prefix sum. ok so if we have N different numbers
+that wouldnt work due to the large number of integers...
+
+
+
+Okay....
+
+- start at the current index
+- Find the rightmost index that is within the radius
+  - If there are no indices here, break the loop and return the total
+  - Else, we count all of the things we find on the way.
+- increase radius
+- repeat
