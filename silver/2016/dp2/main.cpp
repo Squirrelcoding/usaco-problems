@@ -25,9 +25,8 @@ int main() {
   for (auto p : codes) {
     // q is {STATE CODE, CITY}
     pair<string, string> q = {p.first.second, p.first.first};
-
-    if (codes.count(q)) {
-      pairs += codes[q];
+    if (codes.count(q) && p.first.second != p.first.first) {
+      pairs += p.second * codes[q];
     }
   }
 
@@ -37,6 +36,7 @@ int main() {
 }
 
 // MIAMI FL
-// MINNESOTA FL
-// FLINT MI
-// FLOP MI
+/*// MINNESOTA FL*/
+/*// MICHIGAN FL*/
+/*// FLINT MI*/
+/*// FLOP MI*/
