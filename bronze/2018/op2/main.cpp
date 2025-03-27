@@ -23,35 +23,35 @@ int main() {
 
   unordered_map<int, int> demands;
   vector<int> res(n + 1);
-
   for (int i = 0; i < k; ++i) {
-    int a = nxt();
-    int b = nxt();
+    int a = 0; int b = 0;
+    cin >> a; cin >> b;
     demands[a] = b;
     res[b] = a;
-  } 
+  }
 
-  int most_recent = social_h.back();
-  for (int i = n; i >= 1; --i) {
-    if (social_h.size() == 0) break;
-    if (demands.count(most_recent)) {
-      i = demands[most_recent];
+  for (int candidate = 1; candidate <= n; ++candidate) {
+
+    // Set in the candidate
+    res[candidate] = 1;
+    // Since the demands are already filled in we just have to fill in the
+    // social hierarchy
+    int j = 1;
+    int count = 0;
+    while (count < k) {
+      if (res[j] == 0) {
+        res[j] = social_h[count];
+        ++count;
+      }
+      ++j;
     }
-    res[i] = most_recent;
-    social_h.pop_back();
-    most_recent = social_h.back();
+
+    // Check if it's consistent by checking:
+    // 1. The social hierarchy is satisfied
+    // 2. There is only one instance of everything
+
   }
 
-  // Keep going until we reach a 0
-  int first_free_spot = 1;
-  while (res[first_free_spot] != 0) {
-    first_free_spot++;
-  }
-
-  /*for (int a : res) cout << a << ", ";*/
-  /*cout << endl;*/
-
-  cout << first_free_spot << endl;
 
   return 0;
 }
