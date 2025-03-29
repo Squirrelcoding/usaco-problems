@@ -7,6 +7,8 @@ int nxt() {
 }
 
 int main() {
+  freopen("herding.in", "r", stdin);
+  freopen("herding.out", "w", stdout);
   int a = nxt();
   int b = nxt();
   int c = nxt();
@@ -14,29 +16,22 @@ int main() {
   int x = b - a;
   int y = c - b;
 
-  int steps = 0;
-  while (x > 1 || y > 1) {
-    // Case I: x == 1
-    if (x == 1) {
-      x = 1;
-      y = y-1;
-    } else if (y == 1) {
-      y = x-1;
-      x = 1;
-    } else {
-      int smaller = min(x, y);
-      if (smaller == x) {
-        x = 1;
-        y = smaller - 1;
-      } else {
-        x = smaller - 1;
-        y = 1;
-      }
-    }
-    steps++;
+  if (x == 1 && y == 1) {
+    cout << 0 << endl;
+    cout << 0 << endl;
+    return 0;
+  }
+
+  // Calculate minimum value
+  if (x == 2 || y == 2) {
+    cout << 1 << endl;
+  } else if (x >= 3 || y >= 3) {
+    cout << 2 << endl;
   }
   
-  cout << steps << endl;
+  int max_difference = max(x, y);
+
+  cout << max_difference - 1 << endl;
 
   return 0;
 }
