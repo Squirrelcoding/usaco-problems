@@ -20,29 +20,17 @@ int main() {
   for (int i = 0; i < n; ++i) {
     if (nums[i] > 0) {
       for (int j = 1; j <= nums[i]; ++j) {
+
+        // If there's already
+        if (nums[i - j] != -1 && nums[i - j] != nums[i] - j) {
+          cout << -1 << endl;
+          return 0;
+        }
         nums[i - j] = nums[i] - j;
       }
     }
   }
   nums[0] = 0;
-
-  // Verify that it's possible in the first place.
-  // A sequence is only unsolvable iff BEFORE we place everything in, we already have an invalid thing.
-  vector<int> copy = nums;
-  bool valid = true;
-  for (int i = 0; i < n; ++i) {
-    if (copy[i] == -1) copy[i] = 0;
-  }
-
-  // Check if it's all good
-  for (int i = 0; i < n - 1; ++i) {
-    if (copy[i+1] != 0 && copy[i+1] != copy[i] + 1) valid = false;
-  }
-
-  if (!valid) {
-    cout << -1 << endl;
-    return 0;
-  }
 
   int num_zeroes = 0;
   // Count the number of 0's
