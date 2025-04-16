@@ -26,6 +26,24 @@ int main() {
   }
   nums[0] = 0;
 
+  // Verify that it's possible in the first place.
+  // A sequence is only unsolvable iff BEFORE we place everything in, we already have an invalid thing.
+  vector<int> copy = nums;
+  bool valid = true;
+  for (int i = 0; i < n; ++i) {
+    if (copy[i] == -1) copy[i] = 0;
+  }
+
+  // Check if it's all good
+  for (int i = 0; i < n - 1; ++i) {
+    if (copy[i+1] != 0 && copy[i+1] != copy[i] + 1) valid = false;
+  }
+
+  if (!valid) {
+    cout << -1 << endl;
+    return 0;
+  }
+
   int num_zeroes = 0;
   // Count the number of 0's
   for (int i = 0; i < n; ++i) {
@@ -44,4 +62,6 @@ int main() {
 }
 
 // How do we check if it's invalid?
-// 
+// Every possible combination of entering numbers does not lead to a good list
+// A good list is one where we start with 0 and the next element is either 0 or n+1
+// Fill in all with zeroes and check if 
