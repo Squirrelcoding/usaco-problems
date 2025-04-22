@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <vector>
 
 using namespace std;
 
@@ -11,18 +10,38 @@ int nxt() {
 }
 
 pair<int, int> get_corner1(vector<vector<int>> &grid, int target) {
-  for (int i = 0; i < grid[0].size(); ++i) {
-    for (int j = 0; j < grid[0].size() ;++j) {
-      if (grid[i][j] == target) return {i, j};
+  for (int y = 0; y < grid[0].size(); ++y) {
+    for (int x = grid[0].size() - 1; x >= 0; --x) {
+      if (grid[y][x] == target) return {x, y};
     }
   }
   return {-1, -1};
 }
 
 pair<int, int> get_corner2(vector<vector<int>> &grid, int target) {
-  for (int i = grid[0].size() - 1; i >= 0; --i) {
-    for (int j = grid[0].size() - 1; j >= 0; --j) {
-      if (grid[i][j] == target) return {i, j};
+  for (int y = grid[0].size() - 1; y >= 0; --y) {
+    for (int x = 0; x < grid[0].size(); ++x) {
+      if (grid[y][x] == target) return {x, y};
+    }
+  }
+  return {-1, -1};
+}
+
+
+pair<int, int> get_corner3(vector<vector<int>> &grid, int target) {
+  for (int y = grid[0].size() - 1; y >= 0; --y) {
+    for (int x = grid[0].size() - 1; x >= 0; --x) {
+      if (grid[y][x] == target) return {x, y};
+    }
+  }
+  return {-1, -1};
+}
+
+
+pair<int, int> get_corner4(vector<vector<int>> &grid, int target) {
+  for (int y = 0; y < grid[0].size(); ++y) {
+    for (int x = 0; x < grid[0].size(); ++x) {
+      if (grid[y][x] == target) return {x, y};
     }
   }
   return {-1, -1};
@@ -32,7 +51,7 @@ set<int> search_intruders(vector<vector<int>> &grid, int x1, int y1, int x2, int
   set<int> result = {};
   for (int i = x1; i <= x2; ++i) {
     for (int j = y1; j <= y2; ++j) {
-      if (grid[i][j] != normal) result.insert(grid[i][j]);
+      if (grid[j][i] != normal) result.insert(grid[j][i]);
     }
   }
 
@@ -41,7 +60,7 @@ set<int> search_intruders(vector<vector<int>> &grid, int x1, int y1, int x2, int
 
 int main() {
   freopen("art.in", "r", stdin);
-  /*freopen("art.out", "w", stdout);*/
+  freopen("art.out", "w", stdout);
 
   int n = nxt();
 
@@ -68,10 +87,13 @@ int main() {
     pair<int, int> a = get_corner1(grid, i);
     if (a == make_pair(-1, -1)) continue;
     pair<int, int> b = get_corner2(grid, i);
-    int x1 = min(a.first, b.first);
-    int x2 = max(a.first, b.first);
-    int y1 = min(a.second, b.second);
-    int y2 = max(a.second, b.second);
+    pair<int, int> c = get_corner3(grid, i);
+    pair<int, int> d = get_corner4(grid, i);
+    int x1 = min(a.first, min(b.first, min(c.first, d.first)));
+    int x2 = max(a.first, max(b.first, max(c.first, d.first)));
+    int y1 = min(a.second, min(b.second, min(c.second, d.second)));
+    int y2 = max(a.second, max(b.second, max(c.second, d.second)));
+    /*cout << i << " | x1 = " << x1 << ", x2 = " << x2 << " | y1 = " << y1 << ", y2 = " << y2 << endl;*/
     set<int> result = search_intruders(grid, x1, y1, x2, y2, i);
     for (int x : result) {
       res.erase(x);
