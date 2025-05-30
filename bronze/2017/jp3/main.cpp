@@ -7,27 +7,25 @@ using namespace std;
 pair<int, int> find_outermost_tile(vector<vector<int>>& grid) {
   int n = grid.size();
 
-  pair<int, int> result = {-1, -1};
-  int max_result = -1;
-
-  for (int i = 0; i < n; ++i) {
-    for (int j = 0; j < n; ++j) {
-      if (grid[i][j] == 0) continue;
-      int area = (i + 1) * (j + 1);
-      if (area > max_result) {
-        max_result = area;
-        result = {i, j};
-      }
+  for (int layer = n - 1; layer >= 0; --layer) {
+    if (grid[layer][layer] == 1) {
+      return {layer, layer};
     }
+
+    for (int i = layer - 1; i >= 0; --i) {
+      if (grid[layer][i] == 1) return {layer, i};
+      if (grid[i][layer] == 1) return {i, layer};
+    }
+
   }
 
-  return result;
+  return {-1, -1};
 }
 
 
 void flip(vector<vector<int>>& grid, pair<int, int>& bottom_right) {
-  for (int i = 0; i < bottom_right.first; ++i) {
-    for (int j = 0; j < bottom_right.second; ++j) {
+  for (int i = 0; i <= bottom_right.first; ++i) {
+    for (int j = 0; j <= bottom_right.second; ++j) {
       if (grid[i][j] == 0) {
         grid[i][j] = 1;
       } else {
@@ -39,7 +37,7 @@ void flip(vector<vector<int>>& grid, pair<int, int>& bottom_right) {
 
 int main() {
   freopen("cowtip.in", "r", stdin);
-  // freopen("cowtip.out", "w", stdout);
+  freopen("cowtip.out", "w", stdout);
 
   int n;
   cin >> n;
