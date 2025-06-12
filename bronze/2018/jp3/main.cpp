@@ -1,5 +1,7 @@
+#include <algorithm>
 #include <bits/stdc++.h>
 #include <cstdio>
+#include <iterator>
 #include <vector>
 
 using namespace std;
@@ -10,16 +12,33 @@ int nxt() {
   int n; cin >> n; return n;
 }
 
-int find_anomaly(vector<int>& nums) {
-    if (nums[0] > nums[1]) return 0;
+int find_anamoly(vector<int>& nums) {
+  int length = nums.size();
 
-    for (int i = 0; i < nums.size() - 1; ++i) {
-        if (nums[i] > nums[i + 1]) {
-            return i + 1; // Return the index of the out-of-order element
-        }
+  // Edge case: only 2 numbers
+  if (length == 2) {
+    if (nums[1] < nums[0]) {
+      return 0;
     }
-    return -1; // Return -1 if the list is in order
+    return -1;
+  }
+
+  // Check first element
+  if (nums[0] > nums[1]) return 0; 
+
+  // Check elements in between
+  for (int i = 0; i < length - 1; ++i) {
+    if (nums[i - 1] < nums[i] && nums[i] > nums[i + 1]) {
+      return i + 1;
+    }
+  }
+
+  // Check last element
+  if (nums[length - 1] < nums[length - 2]) return length - 1;
+
+  return -1;
 }
+
 
 int main() {
   freopen("outofplace.in", "r", stdin);
@@ -28,7 +47,9 @@ int main() {
   vector<int> nums(n);
   generate(all(nums), nxt);
 
-  int i = find_anomaly(nums);
+  int i = find_anamoly(nums);
+  
+  cout << "i = " << i << endl;
 
   // If the list is already in order
   if (i == -1) {
@@ -54,7 +75,7 @@ int main() {
   else {
     int result = 0;  
     int j = i - 1;
-    while (j > 0  && nums[j] > nums[i]) {
+    while (j >= 0 && nums[j] > nums[i]) {
       j--;
       if (nums[j] != nums[j + 1]) result++;
     }
