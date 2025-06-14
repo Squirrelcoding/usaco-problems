@@ -27,9 +27,12 @@ int find_anamoly(vector<int>& nums) {
   if (nums[0] > nums[1]) return 0; 
 
   // Check elements in between
-  for (int i = 0; i < length - 1; ++i) {
-    if (nums[i - 1] < nums[i] && nums[i] > nums[i + 1]) {
-      return i + 1;
+  for (int i = 1; i < length - 1; ++i) {
+    if (
+        (nums[i] < nums[i - 1] && nums[i] < nums[i + 1] && nums[i - 1] <= nums[i + 1]) || 
+        (nums[i] > nums[i + 1] && nums[i] > nums[i - 1] && nums[i - 1] <= nums[i + 1])
+      ) {
+      return i;
     }
   }
 
@@ -46,10 +49,15 @@ int main() {
   int n = nxt();
   vector<int> nums(n);
   generate(all(nums), nxt);
-
+  /**/
+  /*for (int x : nums) {*/
+  /*  cout << x << " ";*/
+  /*}*/
+  /*cout << endl;*/
+  /**/
   int i = find_anamoly(nums);
   
-  cout << "i = " << i << endl;
+  /*cout << "i = " << i << endl;*/
 
   // If the list is already in order
   if (i == -1) {
