@@ -39,33 +39,19 @@ int plateau(int k, int x, int start_pos, int current_speed, int start_time) {
 }
 
 int solve(int k, int x) {
-  int min_time = k + x - 1;
-  int position = 1;
-  int speed = 1;
-  int t = 1;
+  int min_steps = 0;
 
-  while (t <= k + x - 1) {
-    // Simulate a plateau if we were to start right now
-    int res = plateau(k, x, position, speed, t);
-    // If the plateau results in overshooting, break
-    // Update the minimum
-    min_time = min(min_time, res);
-    // Increase the position 
-    position += speed;
-    speed += 1;
-    t += 1;
-  }
+  
 
-  return min_time;
+  return min_steps;
 }
 
 int main() {
-  freopen("race.in", "r", stdin);
+  // PLAN: The "safe zone" is the closed interval [K, K + X - 1]. Find the minimum number of steps needed to land in the safe zone.
+  // The graph of the velocity should be like a bell-shape. It should have a peak and stuff
+  // /
   int k = nxt();
   int n = nxt();
   vector<int> nums(n);
   generate(all(nums), nxt);
-  for (int num : nums) {
-    cout << solve(k, num) << endl;
-  }
 }
