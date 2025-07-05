@@ -8,18 +8,7 @@ int nxt() {
   int n; cin >> n; return n;
 }
 
-void color_node(int colorings[], vector<int> graph[], int node) {
-  set<int> choices = {4, 3, 2, 1}; 
-  for (int neighbor : graph[node]) {
-    choices.erase(colorings[neighbor]);
-  }
-
-
-  set<int>::iterator iter1 = choices.begin();
-  int choice = *iter1;
-
-  if (choice)
-  colorings[node] = choice;
+void color_node(int colorings[], vector<int> adj[], int i) {
 }
 
 int main() {
@@ -45,10 +34,19 @@ int main() {
   }
 
   int colorings[n];
-
+  fill(colorings, colorings + n, 0);
   
   for (int i = 0; i < n; ++i) {
-    color_node(colorings, adj, i);  
+
+  set<int> choices = {4, 3, 2, 1}; 
+  for (int neighbor : adj[i]) {
+    choices.erase(colorings[neighbor]);
+  }
+
+  set<int>::iterator iter1 = choices.begin();
+  int choice = *iter1;
+
+  colorings[i] = choice;
   }
 
   for (int n : colorings) {
