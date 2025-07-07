@@ -8,8 +8,11 @@ int nxt() {
   int n; cin >> n; return n;
 }
 
+// O(n) space complexity, O(n^2) time complexity.
+
 int main() {
   freopen("swap.in", "r", stdin);
+  freopen("swap.out", "w", stdout);
   int n = nxt();
   int k = nxt();
   int a1 = nxt() - 1;
@@ -28,8 +31,6 @@ int main() {
     nums[swapped_index] = temp;
   }
 
-
-
   // Then apply the B swaps
   for (int i = b1; i <= (b2 + b1) / 2; ++i) {
     int temp = nums[i];
@@ -40,18 +41,15 @@ int main() {
 
   vector<vector<int>> map = {};
 
-  // Make an adjacency list.
+  // Form a partition of cycles
   for (int n : nums) {
-    cout << "processing " << n << "..." << endl;
     bool new_val = true;
     for (auto s : map) {
       if (find(all(s), n) != s.end()) {
-        cout << n << " is in a set." << endl;
         new_val = false;
       }
     }
     if (!new_val) continue;
-    cout << n << " belongs to a new set!" << endl;
 
     // Traverse
     int i = n;
@@ -66,13 +64,13 @@ int main() {
   vector<int> result(n);
 
   for (auto s : map) {
-    for (int n : s) {
-      result[n] = s[(n + k) % s.size()];
+    for (int i = 0; i < s.size(); ++i) {
+      result[s[i]] = s[(i + k) % s.size()];
     }
   }
 
   for (int n : result) {
-
+    cout << n + 1 << endl;
   }
 
   return 0; 
