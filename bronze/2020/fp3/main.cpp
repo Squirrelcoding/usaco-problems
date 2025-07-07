@@ -20,7 +20,6 @@ int main() {
   vector<int> nums;
   for (int i = 0; i < n; ++i) {nums.push_back(i);}
 
-  cout << a1 << " " << a2 << endl;
   // First apply the A swaps
   for (int i = a1; i <= (a2 + a1) / 2; ++i) {
     int temp = nums[i];
@@ -39,30 +38,41 @@ int main() {
     nums[swapped_index] = temp;
   }
 
-  set<set<int>> map;
+  vector<vector<int>> map = {};
 
   // Make an adjacency list.
   for (int n : nums) {
+    cout << "processing " << n << "..." << endl;
     bool new_val = true;
     for (auto s : map) {
-      new_val = false;
+      if (find(all(s), n) != s.end()) {
+        cout << n << " is in a set." << endl;
+        new_val = false;
+      }
     }
     if (!new_val) continue;
+    cout << n << " belongs to a new set!" << endl;
 
     // Traverse
     int i = n;
-    set<int> new_set = {n};
+    vector<int> new_set = {n};
     while (nums[i] != n) {
-      new_set.insert(nums[i]);
+      new_set.push_back(nums[i]);
       i = nums[i];
     }
+    map.push_back(new_set);
   }
+
+  vector<int> result(n);
 
   for (auto s : map) {
     for (int n : s) {
-      cout << n << " ";
+      result[n] = s[(n + k) % s.size()];
     }
-    cout << endl;
+  }
+
+  for (int n : result) {
+
   }
 
   return 0; 
