@@ -8,48 +8,54 @@ int nxt() {
   int n; cin >> n; return n;
 }
 
-class Node {
-public:
-    int data;
-    Node* left, * right;
-
-    Node(int key) {
-        data = key;
-        left = nullptr;
-        right = nullptr;
-    }
-};
-
 int main() {
   freopen("evolution.in", "r", stdin);
+  freopen("evolution.out", "w", stdout);
 
   int n = nxt();
 
-  vector<vector<int>> strings;
 
-  int id = 0;
-  map<string, int> m;
+  map<string, set<int>> m;
   for (int i = 0; i < n; ++i) {
     int k = nxt();
-    vector<int> v(k);
-    for (int j = 0; j < n; ++j) {
+    for (int j = 0; j < k; ++j) {
       string s;
       cin >> s;
-      if (m.count(s)) {
-        m[s] = id;
-        id++;
+      m[s].insert(i);
+    }
+  }
+  /**/
+  /*for (auto p : m) {*/
+  /*  cout << p.first << ": ";*/
+  /*  for (auto s : p.second) {*/
+  /*    cout << s << " ";*/
+  /*  }*/
+  /*  cout << endl;*/
+  /*}*/
+  /**/
+  for (auto p : m) {
+    for (auto q : m) {
+      if (p.first == q.first) continue;
+      // Get the cows that have feature p
+      set<int> p_cows = p.second;
+
+      // Get the cows that have feature q
+      set<int> q_cows = q.second;
+
+      // Intersection
+      set<int> pq_cows;
+      set_intersection(all(p_cows), all(q_cows), inserter(pq_cows, pq_cows.begin()));
+      if (
+          p_cows.size() - pq_cows.size() > 0 && 
+          q_cows.size() - pq_cows.size() > 0 &&
+          pq_cows.size() > 0
+          ) {
+        cout << "no" << endl;
+        return 0;
       }
-      v.push_back(m[s]);
     }
   }
 
-  for (auto v : strings) {
-    sort(all(v));
-  }
-  
-  Node* start = new Node(-1);
-  
-
-
+  cout << "yes" << endl;
   return 0;
 }
