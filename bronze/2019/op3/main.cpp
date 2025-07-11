@@ -8,62 +8,48 @@ int nxt() {
   int n; cin >> n; return n;
 }
 
-// Attempts to split the subpopulations. REMEMBER EMPTY ONES
-bool form_split(vector<set<int>> subpopulations, int max_features) {
-  
-  // Feature `i` is the splitter.
-  for (int i = 0; i < max_features; ++i) {
-    set<int> without = {};
-    set<int> with = {};
-  
-    for (auto subpop : subpopulations) {
-      if (subpop.count(i)) {
-        with.insert(all(subpop)); 
-      } else {
-        without.insert(all(subpop)); 
-      }
-    }
+class Node {
+public:
+    int data;
+    Node* left, * right;
 
-    set<int> intersect;
-    set_intersection(all(without), all(with), inserter(intersect, intersect.begin()));
-    if (intersect.size() != 0) {
-      return false;
+    Node(int key) {
+        data = key;
+        left = nullptr;
+        right = nullptr;
     }
-  } 
-
-  return true;
-}
+};
 
 int main() {
   freopen("evolution.in", "r", stdin);
+
   int n = nxt();
-  vector<set<int>> subpopulations;
-  map<string ,int> features;
+
+  vector<vector<int>> strings;
 
   int id = 0;
-
+  map<string, int> m;
   for (int i = 0; i < n; ++i) {
     int k = nxt();
-    set<int> subpop = {};
-    for (int j = 0; j < k; ++j) {
+    vector<int> v(k);
+    for (int j = 0; j < n; ++j) {
       string s;
       cin >> s;
-      if (features.count(s)) {
-        subpop.insert(features[s]);
-      } else {
-        features.insert({s, id});
-        subpop.insert(features[s]);
+      if (m.count(s)) {
+        m[s] = id;
         id++;
       }
+      v.push_back(m[s]);
     }
-    subpopulations.push_back(subpop);
   }
 
-  if (form_split(subpopulations, id)) {
-    cout << "yes" << endl;
-  } else {
-    cout << "no" << endl;
+  for (auto v : strings) {
+    sort(all(v));
   }
+  
+  Node* start = new Node(-1);
+  
+
 
   return 0;
 }
