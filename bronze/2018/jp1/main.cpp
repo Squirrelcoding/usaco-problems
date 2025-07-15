@@ -2,9 +2,6 @@
 
 using namespace std;
 
-#define all(x) begin(x), end(x)
-#define cp pair<int, int>
-
 int nxt() {
   int n; cin >> n; return n;
 }
@@ -12,31 +9,68 @@ int nxt() {
 int main() {
   freopen("billboard.in", "r", stdin);
   freopen("billboard.out", "w", stdout);
-  cp cowfeed_bl = {nxt(), nxt()};
-  cp cowfeed_tr = {nxt(), nxt()};
 
-  cp mower_bl = {nxt(), nxt()};
-  cp mower_tr = {nxt(), nxt()};
+  int mower_blx = nxt();
+  int mower_bly = nxt();
 
-  int area = abs(cowfeed_tr.second - cowfeed_bl.second) * abs(cowfeed_tr.first - cowfeed_bl.first);
+  int mower_trx = nxt();
+  int mower_try = nxt();
 
-  // Find the complete overlapped area
-  // Case I: cowfeed_bl.X < mower_bl.X < mower_tr.X < cowfeed_tr.X
-  if (cowfeed_bl.first < mower_bl.first && mower_tr.first < cowfeed_tr.first) {
-    // Find the overlapped y_area, if any.
-    int overlapped_y = abs(min(mower_tr.first, cowfeed_tr.first)) - abs(max(mower_bl.first, cowfeed_bl.first));
-    cout << area - overlapped_y * abs(cowfeed_tr.first - cowfeed_bl.first) << endl;
-    return 0;
+
+  int cowfeed_blx = nxt();
+  int cowfeed_bly = nxt();
+
+  int cowfeed_trx = nxt();
+  int cowfeed_try = nxt();
+
+  int mower_width = (mower_trx - mower_blx);
+  int mower_height = (mower_try - mower_bly);
+  int mower_area = mower_width * mower_height;
+
+  // Check if bottom left is covered. If it is, find the 
+  bool blx_covered = cowfeed_blx <= mower_blx && mower_blx <= cowfeed_trx;
+  bool trx_covered = cowfeed_blx <= mower_trx && mower_trx <= cowfeed_trx;
+
+  bool bly_covered = cowfeed_bly <= mower_bly && mower_bly <= cowfeed_try;
+  bool try_covered = cowfeed_bly <= mower_try && mower_try <= cowfeed_try;
+
+  bool bl_covered = blx_covered && bly_covered;
+  bool tl_covered = blx_covered && try_covered;
+  bool tr_covered = trx_covered && try_covered;
+  bool br_covered = trx_covered && bly_covered;
+
+  // Entire billboard is covered
+  if (bl_covered && tl_covered && tr_covered && br_covered) {
+    cout << 0 << endl;
   }
 
-  // Case II: cowfeed_bl.Y < mower_bl.Y < mower_tr.Y < cowfeed_tr.Y
-  if (cowfeed_bl.second < mower_bl.second && mower_tr.second < cowfeed_tr.second) {
-    // Find the overlapped y_area, if any.
-    int overlapped_x = abs(min(mower_tr.second, cowfeed_tr.second)) - abs(max(mower_bl.second, cowfeed_bl.second));
-    cout << area - overlapped_x * abs(cowfeed_tr.second - cowfeed_bl.second) << endl;
-    return 0;
+  //Three or four corners are exposed
+  if (bl_covered + tl_covered + tr_covered + br_covered <= 1) {
+    cout << mower_area << endl;
   }
 
-  cout << area << endl;
+  // Exactly two corners are exposed
+  if (bl_covered + tl_covered + tr_covered + br_covered == 2) {
+
+    // TL and BR exposed
+    if (tl_covered + br_covered == 0) {
+      cout << mower_area - mower_width * (mower_try - cowfeed_try) << endl;
+    }
+  
+    // TR and BR exposed
+    if (tr_covered + br_covered == 0) {
+      cout << mower_area - mower_height * (cowfeed_trx - mower_blx) << endl;
+    }
+
+    // BL and BR exposed
+    if (bl_covered + br_covered == 0) {
+      cout << mower_area - mower_width * (mower_try - cowfeed_bly) << endl;
+    }
+
+    // BL and TL exposed
+    if (bl_covered + tl_covered == 0) {
+      cout << mower_area - mower_height * (mower_trx - cowfeed_blx) << endl;
+    }
+  }
   return 0;
 }
