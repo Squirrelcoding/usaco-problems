@@ -1,4 +1,9 @@
-#include <bits/stdc++.h>
+#include<iostream>
+#include<vector>
+#include<map>
+#include<set>
+#include<algorithm>
+
 
 using namespace std;
 #define all(x) begin(x), end(x)
@@ -8,7 +13,7 @@ int nxt() {
 }
 
 int main() {
-  freopen("input", "r", stdin);
+  // freopen("input", "r", stdin);
   int t = nxt();
   for (int _i = 0; _i < t; ++_i) {
     int n = nxt();
@@ -23,41 +28,47 @@ int main() {
           if (adjacency_list.count(i)) {
             adjacency_list[i].push_back(j);
           } else {
-            adjacency_list[i] = {j};
+            adjacency_list[i] = { j };
           }
         }
       }
     }
 
-    for (auto p : adjacency_list) {
-      cout << p.first << ": ";
-      for (int i : p.second) {
-        cout << i << " ";
-      }
-      cout << endl;
-    }
+    // for (auto p : adjacency_list) {
+    //   cout << p.first << ": ";
+    //   for (int i : p.second) {
+    //     cout << i << " ";
+    //   }
+    //   cout << endl;
+    // }
 
-    cout << "==========================" << endl;
+    // cout << "==========================" << endl;
 
     set<int> visited_nodes;
     
     int result = 0;
     for (auto p : adjacency_list) {
       if (visited_nodes.count(p.first)) continue;
-      int a = INT_MIN;
-      int b = INT_MIN;
       for (int i : p.second) {
         visited_nodes.insert(i);
-        if (nums[i] > b) {
-          if (nums[i] > a) {
-            b = a;
-            a = nums[i];
-          } else {
-            b = nums[i];
-          }
-        }
       }
-      result += max(0, a + b);
+      vector<int> numbers;
+      for (int i : p.second) numbers.push_back(nums[i]);
+      sort(all(numbers));
+      // for (int i : numbers) {
+      //   cout << i << " ";
+      // }
+      // cout << endl;
+
+      int total = 0;
+      for (int i = numbers.size() - 1; i >= 1; i -= 2) {
+        int current_sum = numbers[i] + numbers[i - 1];
+        if (current_sum < 0) {
+            break; // Stop if the sum is negative
+        }
+        total += current_sum;
+      }
+      result += total;
     }
     cout << result << endl;
   }
