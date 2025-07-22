@@ -59,9 +59,10 @@ int main()
         while (low <= high)
         {
             int mid = low + (high - low) / 2;
+            int required_pairs = k * mid / 2;
             if (mid % 2 == 0)
             {
-                if (character_pairs >= k * (mid / 2))
+                if (character_pairs >= required_pairs)
                 {
                     max_length = mid;
                     low = mid + 1;
@@ -73,8 +74,8 @@ int main()
             }
             else
             {
-                if (character_pairs >= k * (mid / 2) ||
-                    (character_pairs + 1 == k * (mid / 2) && single_characters >= mid))
+                if (character_pairs >= required_pairs ||
+                    (character_pairs + 1 == required_pairs && single_characters >= mid))
                 {
                     max_length = mid;
                     low = mid + 1;
