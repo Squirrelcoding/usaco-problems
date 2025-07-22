@@ -1,46 +1,91 @@
-#include<iostream>
-#include<map>
-#include<vector>
+#include <iostream>
+#include <map>
+#include <vector>
 
 using namespace std;
 
 #define all(x) begin(x), end(x)
 
-int nxt() {
-    int n; cin >> n; return n;
+int nxt()
+{
+    int n;
+    cin >> n;
+    return n;
 }
 
-int main() {
+int main()
+{
     freopen("input", "r", stdin);
     int t = nxt();
-    for (int a = 0; a < t; ++a) {
+    for (int a = 0; a < t; ++a)
+    {
         int n = nxt();
         int k = nxt();
         string s;
         cin >> s;
         map<char, int> char_map;
-        for (char c : s) {
-            if (char_map.count(c)) {
+        for (char c : s)
+        {
+            if (char_map.count(c))
+            {
                 char_map[c]++;
-            } else {
+            }
+            else
+            {
                 char_map[c] = 1;
             }
         }
-        int double_char_count = 0;
-        int m = 0;
-        int coun = 0;
 
-        for (auto p : char_map) {
-            coun++;
-            double_char_count += p.second / 2;
-            if (double_char_count > 0) coun++;
-            if (p.second % 2 == 1) m += 1;
+        int character_pairs = 0;
+        int single_characters = 0;
+
+        for (auto p : char_map)
+        {
+            if (p.second % 2 == 0)
+            {
+                character_pairs += p.second / 2;
+            }
+            else
+            {
+                single_characters += 1;
+                character_pairs += (p.second - 1) / 2;
+            }
         }
-        if (m >= k) {
-            cout << coun / k + 1 << endl;
-        } else {
-            cout << coun / k << endl;
+
+        int low = 1;
+        int high = n / k;
+
+        int max_length = 1;
+        while (low <= high)
+        {
+            int mid = low + (high - low) / 2;
+            if (mid % 2 == 0)
+            {
+                if (character_pairs >= k * (mid / 2))
+                {
+                    max_length = mid;
+                    low = mid + 1;
+                }
+                else
+                {
+                    high = mid - 1;
+                }
+            }
+            else
+            {
+                if (character_pairs >= k * (mid / 2) ||
+                    (character_pairs + 1 == k * (mid / 2) && single_characters >= mid))
+                {
+                    max_length = mid;
+                    low = mid + 1;
+                }
+                else
+                {
+                    high = mid - 1;
+                }
+            }
         }
+        cout << max_length << endl;
     }
     return 0;
 }
