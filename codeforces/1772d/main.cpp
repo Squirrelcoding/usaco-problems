@@ -1,5 +1,4 @@
-#include<iostream>
-#include<vector>
+#include<bits/stdc++.h>
 
 using namespace std;
 
@@ -10,7 +9,7 @@ int nxt() {
 }
 
 int main() {
-    freopen("input", "r", stdin);
+    // freopen("input", "r", stdin);
     int t = nxt();
     for (int y = 0; y < t; ++y) {
         int n = nxt();
@@ -21,20 +20,15 @@ int main() {
         int upper = 100000000;
         for (int i = 0; i < n - 1; ++i) {
             if (nums[i] < nums[i + 1]) {
-                upper = min(upper, (int) floor((nums[i] + nums[i + 1]) / 2));
-                // cout << "Setting upper bound to " << upper << endl;
+                upper = min(upper, (nums[i] + nums[i + 1]) / 2);
             } 
             if (nums[i + 1] < nums[i]) {
-                lower = max(lower, (int) ceil((nums[i] + nums[i + 1]) / 2));
-                // cout << "Setting lower bound to " << lower << endl;
+                lower = max(lower, (nums[i] + nums[i + 1] + 1) / 2);
             }
         }
         if (upper < lower) cout << -1 << endl;
         else {
-            long long lowerb = ceil(lower);
-            long long upperb = floor(upper);
-            if (lowerb + 1 == upperb) cout << -1 << endl;
-            cout << (lowerb + upperb) / 2 << endl;
+            cout << (lower + upper) / 2 << endl;
         }
     }
     return 0;
