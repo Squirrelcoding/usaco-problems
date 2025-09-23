@@ -1,15 +1,16 @@
-#include<iostream>
-#include<vector>
-#include<map>
-#include<set>
-#include<algorithm>
-
+#include <algorithm>
+#include <iostream>
+#include <map>
+#include <set>
+#include <vector>
 
 using namespace std;
 #define all(x) begin(x), end(x)
 
 int nxt() {
-  int n; cin >> n; return n;
+  int n;
+  cin >> n;
+  return n;
 }
 
 int main() {
@@ -28,43 +29,32 @@ int main() {
           if (adjacency_list.count(i)) {
             adjacency_list[i].push_back(j);
           } else {
-            adjacency_list[i] = { j };
+            adjacency_list[i] = {j};
           }
         }
       }
     }
 
-    // for (auto p : adjacency_list) {
-    //   cout << p.first << ": ";
-    //   for (int i : p.second) {
-    //     cout << i << " ";
-    //   }
-    //   cout << endl;
-    // }
-
-    // cout << "==========================" << endl;
-
     set<int> visited_nodes;
-    
+
     int result = 0;
     for (auto p : adjacency_list) {
-      if (visited_nodes.count(p.first)) continue;
+      if (visited_nodes.count(p.first))
+        continue;
       for (int i : p.second) {
         visited_nodes.insert(i);
       }
       vector<int> numbers;
-      for (int i : p.second) numbers.push_back(nums[i]);
-      sort(all(numbers));
-      // for (int i : numbers) {
-      //   cout << i << " ";
-      // }
-      // cout << endl;
+      for (int i : p.second)
+        numbers.push_back(nums[i]);
+      // sort(all(numbers));
 
       int total = 0;
+
       for (int i = numbers.size() - 1; i >= 1; i -= 2) {
         int current_sum = numbers[i] + numbers[i - 1];
         if (current_sum < 0) {
-            break; // Stop if the sum is negative
+          break;
         }
         total += current_sum;
       }

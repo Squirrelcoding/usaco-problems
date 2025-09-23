@@ -1,92 +1,34 @@
 #include <iostream>
-#include <map>
 #include <vector>
+#include <stack>
+#include <algorithm>
 
 using namespace std;
 
-#define all(x) begin(x), end(x)
+typedef long long ll;
+const int MAX_N = 2e5;
 
-int nxt()
-{
-    int n;
-    cin >> n;
-    return n;
-}
-
-int main()
-{
-    freopen("input", "r", stdin);
-    int t = nxt();
-    for (int a = 0; a < t; ++a)
-    {
-        int n = nxt();
-        int k = nxt();
+int main(int argc, char* argv[]) {
+    int t;
+    cin >> t;
+    for (int _ = 0; _ < t; ++_) {
+        int n, k;
         string s;
-        cin >> s;
-        map<char, int> char_map;
-        for (char c : s)
-        {
-            if (char_map.count(c))
-            {
-                char_map[c]++;
-            }
-            else
-            {
-                char_map[c] = 1;
-            }
+        cin >> n >> k >> s;
+        vector<int> cnt(26);
+        for (char c : s) {
+            cnt[c - 'a']++;
         }
-
-        int character_pairs = 0;
-        int single_characters = 0;
-
-        for (auto p : char_map)
-        {
-            if (p.second % 2 == 0)
-            {
-                character_pairs += p.second / 2;
-            }
-            else
-            {
-                single_characters += 1;
-                character_pairs += (p.second - 1) / 2;
-            }
+        int cntPairs = 0, cntOdd = 0;
+        for (int c : cnt) {
+            cntPairs += c / 2;
+            cntOdd += c % 2;
         }
-
-        int low = 1;
-        int high = n / k;
-
-        int max_length = 1;
-        while (low <= high)
-        {
-            int mid = low + (high - low) / 2;
-            int required_pairs = k * mid / 2;
-            if (mid % 2 == 0)
-            {
-                if (character_pairs >= required_pairs)
-                {
-                    max_length = mid;
-                    low = mid + 1;
-                }
-                else
-                {
-                    high = mid - 1;
-                }
-            }
-            else
-            {
-                if (character_pairs >= required_pairs ||
-                    (character_pairs + 1 == required_pairs && single_characters >= mid))
-                {
-                    max_length = mid;
-                    low = mid + 1;
-                }
-                else
-                {
-                    high = mid - 1;
-                }
-            }
+        int ans = 2 * (cntPairs / k);
+        cntOdd += 2 * (cntPairs % k);
+        if (cntOdd >= k) {
+            ans++;
         }
-        cout << max_length << endl;
+        cout << ans << '\n';
     }
-    return 0;
 }

@@ -17,12 +17,14 @@ int main() {
 	float x = 0.0;
 	float y = ceil(n - m * x);
 	int result = INT_MAX;
-	while (y >= 0.0) {
+	while (ceil(n - m * x) >= 0.0) {
 		int t = b*x+a*y;
 		result = min(result, t);
 		x += 1.0;
-		y = ceil(n - m * x);	
+		y = ceil(n - m * x);
 	}
+	// cout << "final b*x: " << b*x << endl;
+	result = min(result, (int) (b*(x)));
 
 	cout << result << endl;
 	
