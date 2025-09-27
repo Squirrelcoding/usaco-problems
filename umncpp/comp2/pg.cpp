@@ -9,7 +9,7 @@ int nxt() {
 
 int main() {
 	freopen("i", "r", stdin);
-
+	// kEEP THE STREAK
 	int t = nxt();
 
 	vector<int> h_primes = {5, 9, 13, 17};
@@ -18,7 +18,7 @@ int main() {
 
 	// List of strategies
 	// A sieve
-	// idk
+	// Compute all the 
 
 
 	for (int i = 0; i < t; ++i) {
